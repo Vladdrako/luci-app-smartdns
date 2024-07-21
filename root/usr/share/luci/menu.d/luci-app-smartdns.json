@@ -10,12 +10,5 @@
 			"acl": [ "luci-app-smartdns" ],
 			"uci": { "smartdns": true }
 		}
-	},
-
-	"admin/services/smartdns/log": {
-		"action": {
-			"type": "view",
-			"path": "smartdns/log"
-		}
 	}
 }

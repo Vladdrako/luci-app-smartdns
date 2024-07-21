@@ -744,14 +744,7 @@ return view.extend({
 		o.rmempty = true;
 		o.default = o.disabled;
 
-		///////////////////////////////////////
-		// log settings;
-		///////////////////////////////////////
-		o = s.taboption("log", form.Value, "log_size", _("Log Size"));
-		o.rmempty = true;
-		o.placeholder = "default";
-
-		o = s.taboption("log", form.ListValue, "log_level", _("Log Level"));
+		o = s.taboption("custom", form.ListValue, "log_level", _("Log Level"));
 		o.rmempty = true;
 		o.placeholder = "default";
 		o.value("", _("default"));
@@ -763,12 +756,23 @@ return view.extend({
 		o.value("fatal");
 		o.value("off");
 
-		o = s.taboption("log", form.Value, "log_num", _("Log Number"));
+		o = s.taboption("custom", form.ListValue, "log_output_mode", _("Log Output Mode"));
+		o.rmempty = true;
+		o.placeholder = _("file");
+		o.value("file", _("file"));
+		o.value("syslog", _("syslog"));
+	
+		o = s.taboption("custom", form.Value, "log_size", _("Log Size"));
 		o.rmempty = true;
 		o.placeholder = "default";
 		o.depends("log_output_mode", "file");
 
-		o = s.taboption("log", form.Value, "log_file", _("Log File"))
+		o = s.taboption("custom", form.Value, "log_num", _("Log Number"));
+		o.rmempty = true;
+		o.placeholder = "default";
+		o.depends("log_output_mode", "file");
+
+		o = s.taboption("custom", form.Value, "log_file", _("Log File"))
 		o.rmempty = true
 		o.placeholder = "/var/log/smartdns/smartdns.log"
 		o.depends("log_output_mode", "file");
@@ -799,17 +803,6 @@ return view.extend({
 		o.rmempty = true
 		o.placeholder = "/var/log/smartdns/smartdns-audit.log"
 		o.depends({"enable_audit_log":"1", "audit_log_output_mode":"file"});
-
-		o = s.taboption("log", form.DummyValue, "_view_log", _("View Log"));
-		o.renderWidget = function () {
-			return E('button', {
-				'class': 'btn cbi-button',
-				'id': 'btn_view_log',
-				'click': ui.createHandlerFn(this, function () {
-					window.location.href = "smartdns/log";
-				})
-			}, [_("View Log")]);
-		}
 
 		////////////////
 		// Upstream servers;
